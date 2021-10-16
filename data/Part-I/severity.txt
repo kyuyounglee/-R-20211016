@@ -1,0 +1,43 @@
+      Bugs.BR       Bugs.AR    NT.Bugs.BR    NT.Bugs.AR      Major.BR      Major.AR   Critical.BR 
+        11605           374         10119            17          1135            35           432 
+  Critical.AR H.Priority.BR H.Priority.AR 
+           10           459             3 
+      Bugs.BR       Bugs.AR    NT.Bugs.BR    NT.Bugs.AR      Major.BR      Major.AR   Critical.BR 
+        11605           374         10119            17          1135            35           432 
+  Critical.AR H.Priority.BR H.Priority.AR 
+           10           459             3 
+[1] "D:/5.Individual/3.Document/2.R/가메출판사R/Rwork-2nd/Part-I"
+[1] "D:/5.Individual/3.Document/2.R/가메출판사R/Rwork-2nd/Part-I"
+[1] 200
+[1] 10
+     
+      man women
+  no  694   123
+  yes 175   324
+[1] "D:/5.Individual/3.Document/2.R/가메출판사R/Rwork-2nd/Part-I"
+[1] "D:/5.Individual/3.Document/2.R/가메출판사R/Rwork-2nd/Part-I"
+[1] "D:/5.Individual/3.Document/2.R/가메출판사R/Rwork-2nd/Part-I"
+[1] "D:/8.R/data"
+[1] "D:/8.R/data"
+  학번   이름 성적 평가
+1  101 홍길동   80    B
+2  102 이순신   95   A+
+3  103 강감찬   78   C+
+4  104 유관순   85   B+
+5  105 김유신   65   D+
+[1] "D:/8.R/data"
+[1] "D:/8.R/data"
+  학번   이름 성적 평가
+1  101 홍길동   80    B
+2  102 이순신   95   A+
+3  103 강감찬   78   C+
+4  104 유관순   85   B+
+5  105 김유신   65   D+
+package ‘writexl’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\이규영\AppData\Local\Temp\Rtmpe8JGuZ\downloaded_packages
+[1] "D:/8.R/data"
+[1] "D:/8.R/data"
+[1] "D:/8.R/data"
+[1] "D:/8.R/library"                     "C:/Program Files/R/R-4.0.3/library"
