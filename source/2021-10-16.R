@@ -65,3 +65,47 @@ df
 colnames(df)
 colnames(df)<-c("사번","이름","급여")
 df
+
+#컬럼단위로 데이터를 읽을때
+df['사번']
+df[1]
+df$사번
+
+class(df['사번'])
+class(df[1])
+class(df$사번)
+
+# 1. 파일에서 데이터를 읽는다
+# 2. 데이터 구조는 data.frame 형태
+# str 함수를 이용해서 데이터 구조를 파악
+str(df)
+
+seq(2, 12, 2.5)
+
+df<-data.frame(x=c(1:5), y=seq(2,12,2.5))
+str(df)
+
+
+df<-read.csv("emp.csv",header = T)
+df
+# 헤더정보를 변경
+colnames(df)
+colnames(df)<-c("사번","이름","급여")
+df
+# row 의 수
+nrow(df)
+# col 의 수
+ncol(df)
+colnames(df)
+names(df)
+
+#이순신 유관순 강감찬 의 이름만 출력
+df[c(2,3,4),2]
+
+mean(df$급여)
+mean(df[,3])
+mean(df[,'급여'])
+#mean(df['급여'])
+apply(df['급여'],2,mean)
+
+df[,c(1,3)]
