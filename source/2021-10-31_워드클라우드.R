@@ -1,3 +1,4 @@
+.libPaths('C:\\Rlib')
 # konlp 가져오는 방법
 # KONLP  단어 추출하는 library
 # https://cran.r-project.org/bin/windows/Rtools/ 
@@ -18,7 +19,7 @@ remotes::install_github('haven-jeon/KoNLP', upgrade = "never",
 library(KoNLP)
 
 # 한글 데이터 로드
-facebook =  file("D:\\data\\Part-II\\facebook_bigdata.txt", encoding = 'utf-8')
+facebook =  file("D:\\data\\Part-II\\marketing.txt", encoding = 'utf-8')
 facebook_data = readLines(facebook)
 
 
@@ -26,7 +27,7 @@ library(stringr)
 # 한글만 찾아주는 함수
 hangle_choice = function(list_x){
   result_list = c()
-  for(index in 1:length(df$data)){
+  for(index in 1:length(list_x)){
     temp = str_extract(list_x[index], "[ㄱ-ㅣ가-힣]+")
     result_list = append(result_list, temp)  
   }  
