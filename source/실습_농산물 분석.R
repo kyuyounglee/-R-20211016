@@ -2,13 +2,21 @@
 # 농산물 가격 데이터 시각화 및 연관성 분석
 
 # 상관분석  지역별 돼지고기 가격의 현황
+.libPaths('C:/Rlib')
+
 
 product_data = 'https://url.kr/97jw1e'  # product.csv
 code_data = 'http://asq.kr/Z2wVOPH'  # code.csv
 
-library1 = c('plyr','ggplot2','stringr','zoo','corrplot',
-             'RcolorBrewer')
+library1 = c('plyr','ggplot2','stringr')
 unlist(lapply(library1,require,character.only = TRUE))
+
+install.packages("zoo")
+library(zoo)
+install.packages("corrplot")
+library(corrplot)
+install.packages("RColorBrewer")
+library(RColorBrewer)
 
 #패키지 명                설명
 #plyr         데이터 핸들링을 하기 위한 라이브러리
@@ -74,11 +82,43 @@ for(i in 1: length(names(total.pig.mean))){
 # 데이터의 길이가 맞지 않는 지역을 제거하여 새로운 데이터셋을 생성
 # 순천, 안동, 용인,의정부, 창원,춘천,포항
 day.pig = day.pig[!day.pig$name %in% c('순천', '안동', '용인','의정부',
-                             '창원','춘천','포항'),]
+                             '창원','춘천','포항'), ]
 
 #  이름, 지역, 날자별로 평균가격을 구한다.
-
 pig.region.daily.mean =  ddply(day.pig, .(name,region, date), summarise, 
                                mean.price = mean(price))
 
+pig.region.daily.mean$month =  str_sub(pig.region.daily.mean$date,1,7)
+# 1. 지역별 월별 돼지고기 평균 값
+# dplyr
+pig.region.monthly.mean  = pig.region.daily.mean %>% 
+            ddply(.(name,region, month), summarise, mean.price = mean(mean.price))
 
+
+# 상관분석 및 데이터 시각화
+#월별 돼지고기 가격변화를 시각화
+pig.region.monthly.mean$month =  as.Date( as.yearmon( pig.region.monthly.mean$month,'%Y-%m') )
+
+pig.region.monthly.mean %>% 
+  ggplot(aes(x=month,y=mean.price, col = name,group=name)) + geom_line() +
+  theme_bw() + geom_point(size=6,shape=20,alpha=0.5) + ylab("돼지고기 가격") +
+  xlab("년 월")
+
+
+# 연간 돼지고기 평균가격 시각화
+pig.region.daily.mean$year =  str_sub(pig.region.daily.mean$date,1,4)
+
+pig.region.yearly.mean  = pig.region.daily.mean %>% 
+  ddply(.(name,region, year), summarise, mean.price = mean(mean.price))
+
+pig.region.yearly.mean %>% 
+  ggplot(aes(x=year,y=mean.price, col = name,group=name)) + geom_line() +
+  theme_bw() + geom_point(size=6,shape=20,alpha=0.5) + ylab("돼지고기 가격") +
+  xlab("년")
+
+
+# 2011 ~ 2013년 까지의 돼지고기 연평균 가격의 변화를 막대 그래프로 시각화
+pig.region.yearly.mean %>% 
+  ggplot(aes(x=name,y=mean.price,fill = factor(year))) + theme_bw() +
+  geom_bar(stat = "identity", position ="dodge", col = 'white')+
+  ylab("돼지고기 가격") + xlab("")
