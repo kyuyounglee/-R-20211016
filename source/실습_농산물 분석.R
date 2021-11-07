@@ -173,7 +173,7 @@ temp %>% ggplot(aes(x=month,y=mean.price,col=name,groupname)) +
   geom_line() + theme_classic() + geom_point(size=6,shape=20,alpha=0.5) + 
   ylab("돼지고기 가격") + xlab("")
 
-write.csv(temp,'pig.region.csv', fileEncoding = 'UTF-8')
+write.csv(pig.region,'pig.region.csv', fileEncoding = 'UTF-8')
 write.csv(pig.region.monthly.mean,'pig.region.monthly.mean.csv',
           fileEncoding = 'UTF-8')
 getwd()
