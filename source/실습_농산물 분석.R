@@ -138,6 +138,7 @@ pig.region.monthly.mean %>% ggplot(aes(x=name, y=mean.price, fill=name)) +
 
 # 상관관계 시각화
 temp = dlply(pig.region.daily.mean, .(name), summarise, mean.price)
+str(temp)
 pig.region = data.frame(서울 = unlist(temp$서울),
            부산 = unlist(temp$부산),
            대구 = unlist(temp$대구),
@@ -152,6 +153,25 @@ pig.region = data.frame(서울 = unlist(temp$서울),
            )
 cor_pig = cor(pig.region)
 theme(axis.text.x=element_text(size=9))
-corrplot(cor_pig, method="color", type="upper", order="hclust", 
+corrplot(cor_pig, method="ellipse", type="upper", order="hclust", 
          addCoef.col ="white", tl.srt=0, tl.col="black", tl.cex=0.7, 
          col=brewer.pal(n=8, name="PuOr"))
+
+
+# 광주 대구 서울의 세 지역이 서로 상관계가 높은것을 볼수 있다
+# 세지역의 시계열 데이터를 뽑아서 시각화
+str(pig.region.monthly.mean)
+pig.region.monthly.mean$month = 
+  pig.region.monthly.mean$month %>% as.yearmon("%Y-%m") %>% as.Date()
+
+# 광주 대구 서울의 데이터만 뽑는다.
+temp =  pig.region.monthly.mean[pig.region.monthly.mean$name  %in% c('광주','대구','서울'), ]
+
+temp %>% ggplot(aes(x=month,y=mean.price,col=name,groupname)) +
+  geom_line() + theme_classic() + geom_point(size=6,shape=20,alpha=0.5) + 
+  ylab("돼지고기 가격") + xlab("")
+
+write.csv(temp,'pig.region.csv', fileEncoding = 'UTF-8')
+getwd()
+
+
