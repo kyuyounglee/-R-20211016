@@ -122,3 +122,36 @@ pig.region.yearly.mean %>%
   ggplot(aes(x=name,y=mean.price,fill = factor(year))) + theme_bw() +
   geom_bar(stat = "identity", position ="dodge", col = 'white')+
   ylab("돼지고기 가격") + xlab("")
+
+# 2011 ~ 2013 가격분포를 상자그림으로 시각화 일별
+pig.region.monthly.mean %>% ggplot(aes(x=name, y=mean.price, fill=name)) +
+  theme_bw() + geom_boxplot() + xlab("") + ylab("돼지고기 가격")
+
+
+pig.region.monthly.mean$year = pig.region.monthly.mean$month %>%
+  str_sub(1,4)
+# 2011 ~ 2013 일평균 가격분포를 년도별로 세분화
+pig.region.monthly.mean %>% ggplot(aes(x=name, y=mean.price, fill=name)) +
+  theme_bw() + geom_boxplot() + xlab("") + ylab("돼지고기 가격") +
+  facet_wrap(~year, scales = 'fixed')
+
+
+# 상관관계 시각화
+temp = dlply(pig.region.daily.mean, .(name), summarise, mean.price)
+pig.region = data.frame(서울 = unlist(temp$서울),
+           부산 = unlist(temp$부산),
+           대구 = unlist(temp$대구),
+           인천 = unlist(temp$인천),
+           광주 = unlist(temp$광주),
+           대전 = unlist(temp$대전),
+           울산 = unlist(temp$울산),
+           수원 = unlist(temp$수원),
+           청주 = unlist(temp$청주),
+           제주 = unlist(temp$제주),
+           전주 = unlist(temp$전주)
+           )
+cor_pig = cor(pig.region)
+theme(axis.text.x=element_text(size=9))
+corrplot(cor_pig, method="color", type="upper", order="hclust", 
+         addCoef.col ="white", tl.srt=0, tl.col="black", tl.cex=0.7, 
+         col=brewer.pal(n=8, name="PuOr"))
