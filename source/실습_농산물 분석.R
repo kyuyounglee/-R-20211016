@@ -57,7 +57,7 @@ date1 =  ddply(day.pig, .(date), summarise, name = name, region=region,price=pri
 date2 = ddply(date1, .(date,name),summarise, mean.price = mean(price))
 
 total.pig.mean =  dlply(date2, .(name))
-total.pig.mean
+str(total.pig.mean)
 
 # day.pig 일별로 정렬한후 , 지역별로 돼지고기의 평균가격을 구한다
 # 위에서 구한 데이터를 지역별로 나누어서 저장한다
@@ -165,6 +165,8 @@ pig.region.monthly.mean$month =
   pig.region.monthly.mean$month %>% as.yearmon("%Y-%m") %>% as.Date()
 
 # 광주 대구 서울의 데이터만 뽑는다.
+# 공백을 제거한다
+pig.region.monthly.mean$name = str_trim(pig.region.monthly.mean$name)
 temp =  pig.region.monthly.mean[pig.region.monthly.mean$name  %in% c('광주','대구','서울'), ]
 
 temp %>% ggplot(aes(x=month,y=mean.price,col=name,groupname)) +
@@ -172,6 +174,8 @@ temp %>% ggplot(aes(x=month,y=mean.price,col=name,groupname)) +
   ylab("돼지고기 가격") + xlab("")
 
 write.csv(temp,'pig.region.csv', fileEncoding = 'UTF-8')
+write.csv(pig.region.monthly.mean,'pig.region.monthly.mean.csv',
+          fileEncoding = 'UTF-8')
 getwd()
 
 
